@@ -1,0 +1,472 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Blair–Peddie Preterite Day</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a stadium scoreboard band on top, one game card below that swaps between screens (intro, round intro, play, round recap, final). */
+:root{
+  --paper:#eef1f6; --card:#ffffff; --ink:#14213a; --muted:#5a6680; --line:#d5dbe6;
+  --board:#0f1d38; --board-ink:#c9d3e6; --led:#ffb627; --gold:#b8861b; --gold-soft:#f6e9c8;
+  --ok:#1f7a4a; --ok-soft:#dcf1e4; --miss:#b3322a; --miss-soft:#f8e0dd; --hint-soft:#e7edf8;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-read:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0b1220; --card:#141e31; --ink:#e7ecf5; --muted:#9aa7bf; --line:#27344d;
+  --board:#060c18; --board-ink:#aab6cc; --led:#ffbf3d; --gold:#e0b04a; --gold-soft:#3a2f14;
+  --ok:#5fd093; --ok-soft:#123426; --miss:#ff8a80; --miss-soft:#3c1a19; --hint-soft:#1b2944; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b1220; --card:#141e31; --ink:#e7ecf5; --muted:#9aa7bf; --line:#27344d;
+  --board:#060c18; --board-ink:#aab6cc; --led:#ffbf3d; --gold:#e0b04a; --gold-soft:#3a2f14;
+  --ok:#5fd093; --ok-soft:#123426; --miss:#ff8a80; --miss-soft:#3c1a19; --hint-soft:#1b2944; color-scheme:dark}
+
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Scoreboard */
+.board{background:var(--board);color:var(--board-ink);border-bottom:4px solid var(--gold)}
+.board .wrap{padding-block:14px 16px;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:12px}
+.board h1{grid-column:1/-1;margin:0;font-family:var(--f-display);font-weight:800;font-size:clamp(1.05rem,3.6vw,1.4rem);letter-spacing:.14em;text-transform:uppercase;text-align:center;color:#fff;text-wrap:balance}
+.board h1 span{color:var(--led)}
+.cell{display:flex;flex-direction:column;align-items:center;gap:2px}
+.cell small{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+.led{font-family:var(--f-display);font-weight:900;color:var(--led);font-variant-numeric:tabular-nums;line-height:1;font-size:clamp(1.8rem,7vw,2.4rem);text-shadow:0 0 12px color-mix(in srgb,var(--led) 45%,transparent)}
+.led.big{font-size:clamp(2.6rem,11vw,3.6rem)}
+.led sub{font-size:.42em;color:var(--board-ink);vertical-align:baseline;text-shadow:none;margin-left:2px}
+
+main .wrap{padding-block:22px 48px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,4vw,30px);display:flex;flex-direction:column;gap:18px}
+.eyebrow{font-family:var(--f-display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-size:.95rem}
+h2{font-family:var(--f-display);font-weight:900;font-size:clamp(2rem,7vw,2.9rem);line-height:1;margin:0;text-transform:uppercase;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:800;font-size:1.25rem;margin:0;letter-spacing:.04em;text-transform:uppercase}
+p{margin:0;max-width:65ch}
+.lede{font-family:var(--f-read);font-size:1.1rem}
+.muted{color:var(--muted)}
+ul.rules{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;max-width:65ch}
+.verbs{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.8rem;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+
+/* Progress pips */
+.pips{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.pip{height:8px;border-radius:2px;background:var(--line)}
+.pip.cur{background:var(--ink)}
+.pip.s10{background:var(--ok)} .pip.mid{background:var(--gold)} .pip.low{background:var(--miss)}
+
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.subj{font-size:.85rem;color:var(--muted)}
+.subj b{color:var(--ink)}
+.sentence{font-family:var(--f-read);font-size:clamp(1.25rem,4.4vw,1.6rem);line-height:1.75;text-wrap:pretty}
+.sentence input{font:inherit;font-weight:600;color:var(--ink);background:var(--hint-soft);border:none;border-bottom:3px solid var(--gold);border-radius:6px 6px 0 0;padding:0 8px;width:9.5ch;max-width:100%;text-align:center}
+.sentence input:focus{outline:2px solid var(--gold);outline-offset:2px}
+.sentence input:disabled{opacity:1}
+.sentence input.right{border-bottom-color:var(--ok);background:var(--ok-soft)}
+.sentence input.wrong{border-bottom-color:var(--miss);background:var(--miss-soft)}
+.inf{color:var(--muted);font-style:italic;white-space:nowrap}
+
+.accents{display:flex;flex-wrap:wrap;gap:6px}
+.accents button{font-family:var(--f-read);font-size:1.1rem;width:42px;height:40px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer}
+.accents button:hover{border-color:var(--gold)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font-family:var(--f-display);font-weight:800;font-size:1.15rem;letter-spacing:.08em;text-transform:uppercase;padding:10px 22px;border-radius:8px;border:2px solid var(--ink);background:var(--ink);color:var(--card);cursor:pointer}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:#14213a}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,.accents button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.tries{font-size:.85rem;color:var(--muted)}
+
+.fb{border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;border-left:5px solid}
+.fb.ok{background:var(--ok-soft);border-color:var(--ok)}
+.fb.hint{background:var(--hint-soft);border-color:var(--gold)}
+.fb.miss{background:var(--miss-soft);border-color:var(--miss)}
+.fb .head{font-weight:600}
+.fb .es{font-family:var(--f-read)}
+.fb .meter{font-size:.85rem;color:var(--muted)}
+.fb .ans{font-family:var(--f-read);font-weight:600}
+
+/* Recap */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--f-display);font-weight:900;font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.cheer{font-family:var(--f-read);font-size:1.25rem;font-weight:600}
+.en{font-size:.9rem;color:var(--muted);font-style:italic}
+.tip{background:var(--gold-soft);border-radius:10px;padding:12px 14px;font-family:var(--f-read)}
+.review{width:100%;border-collapse:collapse;font-size:.92rem}
+.tablewrap{overflow-x:auto}
+.review td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+.review td.n{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.review .form{font-family:var(--f-read);font-weight:600}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:80px 1fr 56px;gap:10px;align-items:center;font-size:.9rem}
+.bar .track{height:12px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--gold)}
+.bar .n{text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:460px){.stats{grid-template-columns:1fr 1fr}.stats .stat:last-child{grid-column:1/-1}}
+@media (prefers-reduced-motion:no-preference){.card{animation:rise .25s ease-out}@keyframes rise{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+
+<header class="board">
+  <div class="wrap">
+    <h1>Blair <span>vs</span> Peddie · Día del Pretérito</h1>
+    <div class="cell"><small>Ronda</small><div class="led" id="sbRound">–</div></div>
+    <div class="cell"><small>Puntos</small><div class="led big" id="sbPts">0</div></div>
+    <div class="cell"><small>Pregunta</small><div class="led" id="sbQ">–</div></div>
+  </div>
+</header>
+<main><div class="wrap"><section class="card" id="app" aria-live="polite"></section></div></main>
+
+<script>
+/* ---------- Conjugation engine ---------- */
+const PERS = {yo:0, tu:1, el:2, nos:3, ellos:4};
+const PLABEL = ['yo','tú','él / ella / usted','nosotros / nosotras','ellos / ellas / ustedes'];
+function conj(inf, type){
+  const base = inf.slice(0,-2), end = inf.slice(-2);
+  if (type==='y') return [base+'í', base+'íste', base+'yó', base+'ímos', base+'yeron'];
+  if (end==='ar'){
+    let yo = base;
+    if (type==='car') yo = base.slice(0,-1)+'qu';
+    if (type==='gar') yo = base+'u';
+    if (type==='zar') yo = base.slice(0,-1)+'c';
+    return [yo+'é', base+'aste', base+'ó', base+'amos', base+'aron'];
+  }
+  let s3 = base;
+  if (type==='stem'){
+    const i = Math.max(base.lastIndexOf('e'), base.lastIndexOf('o'));
+    s3 = base.slice(0,i) + (base[i]==='e'?'i':'u') + base.slice(i+1);
+  }
+  return [base+'í', base+'iste', s3+'ió', base+'imos', s3+'ieron'];
+}
+
+/* ---------- Content: 5 rounds × 10 sentences ---------- */
+// s: sentence (___ = blank), v: infinitive, show: infinitive as displayed, p: person, t: type, r: reflexive pronoun already in the sentence
+const ROUNDS = [
+ {title:'Llegan los rivales', sub:'La mañana del gran día y la carrera de cross country', items:[
+  {s:'El sábado yo ___ el despertador a las seis y salté de la cama, ¡era el Día de Blair–Peddie!', v:'apagar', p:'yo', t:'gar'},
+  {s:'Mi compañera de cuarto solo ___ cinco horas por los nervios.', v:'dormir', p:'el', t:'stem'},
+  {s:'Los autobuses de Peddie ___ al campus de Blair a las siete y media.', v:'llegar', p:'ellos', t:'gar'},
+  {s:'Nosotros ___ panqueques con jarabe de arce que donaron los padres.', v:'desayunar', p:'nos', t:'ar'},
+  {s:'La señora Kim, la madre de un corredor, ___ chocolate caliente a todos los espectadores.', v:'servir', p:'el', t:'stem'},
+  {s:'Mientras comía, yo ___ el programa del día: ¡seis deportes y una cena enorme!', v:'leer', p:'yo', t:'y'},
+  {s:'La carrera de cross country ___ a las ocho en punto.', v:'comenzar', p:'el', t:'zar'},
+  {s:'¡Tú ___ los cinco kilómetros en menos de veinte minutos!', v:'correr', p:'tu', t:'er'},
+  {s:'Un corredor de Peddie ___ en el barro cerca del lago, pero se levantó enseguida.', v:'caer', p:'el', t:'y'},
+  {s:'Yo ___ a mi hermano cuando cruzó la meta en primer lugar.', v:'abrazar', p:'yo', t:'zar'},
+ ]},
+ {title:'Hockey y fútbol', sub:'Palos, balones y gradas llenas de ruido', items:[
+  {s:'Las jugadoras de hockey sobre césped se ___ con sus uniformes azules.', v:'vestir', show:'vestirse', r:'se', p:'ellos', t:'stem'},
+  {s:'Yo ___ de portera en el partido de hockey sobre césped.', v:'jugar', p:'yo', t:'gar'},
+  {s:'Desde el vestuario, nosotros ___ los tambores de la banda.', v:'oír', p:'nos', t:'y'},
+  {s:'La árbitra ___ silencio antes de empezar el partido.', v:'pedir', p:'el', t:'stem'},
+  {s:'Los aficionados de Blair ___ «¡Vamos, Bucs!» durante todo el partido.', v:'gritar', p:'ellos', t:'ar'},
+  {s:'Yo ___ el tambor con la banda en las gradas hasta que me dolieron las manos.', v:'tocar', p:'yo', t:'car'},
+  {s:'La capitana de Blair ___ el gol de la victoria en el último minuto.', v:'marcar', p:'el', t:'car'},
+  {s:'En el partido de fútbol, yo me ___ a la portería y pateé con fuerza.', v:'acercar', show:'acercarse', r:'me', p:'yo', t:'car'},
+  {s:'Los padres de Peddie no ___ lo que veían cuando su equipo empató el partido.', v:'creer', p:'ellos', t:'y'},
+  {s:'¿Tú ___ mucha presión durante los penaltis?', v:'sentir', p:'tu', t:'stem'},
+ ]},
+ {title:'Tenis y vóleibol', sub:'Raquetas, remates y aficionados con la cara pintada', items:[
+  {s:'Yo ___ mi partido de tenis con un saque perfecto.', v:'comenzar', p:'yo', t:'zar'},
+  {s:'Mi rival de Peddie ___ jugar desde el fondo de la cancha.', v:'preferir', p:'el', t:'stem'},
+  {s:'Mi compañera y yo ___ el primer set de dobles 6–4.', v:'ganar', p:'nos', t:'ar'},
+  {s:'El entrenador ___ las instrucciones tres veces durante el descanso.', v:'repetir', p:'el', t:'stem'},
+  {s:'Los espectadores ___ el marcador y empezaron a cantar.', v:'leer', p:'ellos', t:'y'},
+  {s:'Cuando se rompió una cuerda, yo ___ mi raqueta de repuesto en la bolsa.', v:'buscar', p:'yo', t:'car'},
+  {s:'En vóleibol, las chicas de Blair ___ luchando hasta el último punto.', v:'seguir', p:'ellos', t:'stem'},
+  {s:'Ustedes ___ cada bloqueo de nuestra central con muchísimo entusiasmo.', v:'aplaudir', p:'ellos', t:'er'},
+  {s:'Yo ___ ese remate mil veces antes del partido, ¡y por fin funcionó!', v:'practicar', p:'yo', t:'car'},
+  {s:'¿Tú ___ cuánto gritó la gente después del último punto?', v:'oír', p:'tu', t:'y'},
+ ]},
+ {title:'Fútbol americano', sub:'El partido más esperado de la temporada', items:[
+  {s:'Yo ___ rápidamente unos tacos que donaron los padres antes del partido de fútbol americano.', v:'almorzar', p:'yo', t:'zar'},
+  {s:'El mariscal de campo de Blair ___ un pase de cuarenta yardas.', v:'lanzar', p:'el', t:'zar'},
+  {s:'Los jugadores de Peddie ___ con mucha garra en cada jugada.', v:'competir', p:'ellos', t:'stem'},
+  {s:'Yo ___ tarde a las gradas y casi no encontré asiento.', v:'llegar', p:'yo', t:'gar'},
+  {s:'Mis amigos y yo nos ___ la cara de azul y blanco.', v:'pintar', show:'pintarse', r:'nos', p:'nos', t:'ar'},
+  {s:'Un aficionado de Peddie ___ que el árbitro se equivocó y protestó a gritos.', v:'creer', p:'el', t:'y'},
+  {s:'El equipo de Peddie ___ un touchdown en el tercer cuarto.', v:'conseguir', p:'el', t:'stem'},
+  {s:'Nosotros ___ la mejor defensa de toda la temporada.', v:'jugar', p:'nos', t:'gar'},
+  {s:'Toda la multitud ___ el silbato final y explotó de alegría.', v:'oír', p:'el', t:'y'},
+  {s:'Yo ___ a llorar de emoción cuando ganamos el partido.', v:'empezar', p:'yo', t:'zar'},
+ ]},
+ {title:'El banquete de los padres', sub:'Comida increíble y una celebración hasta la noche', items:[
+  {s:'Los padres de las dos escuelas ___ más de cien bandejas de comida para la cena.', v:'donar', p:'ellos', t:'ar'},
+  {s:'El papá de Diego ___ unas empanadas deliciosas.', v:'preparar', p:'el', t:'ar'},
+  {s:'Yo ___ el chili, la lasaña y tres tipos de galletas.', v:'probar', p:'yo', t:'ar'},
+  {s:'Ustedes ___ más tamales tres veces, ¡qué hambre!', v:'pedir', p:'ellos', t:'stem'},
+  {s:'¿Tú ___ algo hoy o llegaste al banquete con mucha hambre?', v:'almorzar', p:'tu', t:'zar'},
+  {s:'Yo casi me ___ con mi plato lleno de brownies.', v:'caer', show:'caerse', r:'me', p:'yo', t:'y'},
+  {s:'Los capitanes de los dos equipos se ___ con un apretón de manos.', v:'despedir', show:'despedirse', r:'se', p:'ellos', t:'stem'},
+  {s:'Todos se ___ muchísimo en la celebración.', v:'divertir', show:'divertirse', r:'se', p:'ellos', t:'stem'},
+  {s:'Al final de la noche, el director ___ las luces del gimnasio.', v:'apagar', p:'el', t:'gar'},
+  {s:'Esa noche yo ___ como un tronco después de un día increíble.', v:'dormir', p:'yo', t:'stem'},
+ ]},
+];
+ROUNDS.forEach(R=>R.items.forEach(it=>{ it.forms = conj(it.v, it.t); it.ans = it.forms[PERS[it.p]]; }));
+
+/* ---------- Scoring ---------- */
+const noAcc = s => s.normalize('NFD').replace(/[́̈]/g,'').normalize('NFC');
+function clean(raw, it){
+  let s = raw.toLowerCase().replace(/[.,;:!?¡¿«»"']/g,' ').replace(/\s+/g,' ').trim();
+  if (it.r && s.startsWith(it.r+' ')) s = s.slice(it.r.length+1);
+  return s;
+}
+function lev(a,b){
+  const m=a.length,n=b.length, d=Array.from({length:m+1},(_,i)=>[i]);
+  for(let j=1;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+// Closeness 0–10. Only the exact form earns 10.
+function closeness(guess, ans){
+  if (!guess) return 0;
+  if (guess===ans) return 10;
+  const g=noAcc(guess), a=noAcc(ans);
+  if (g===a) return 8;
+  const d = lev(g,a), L = Math.max(g.length,a.length);
+  return Math.max(0, Math.min(7, Math.round(10*(1-d/L))));
+}
+const MAX_TRIES = 3;
+function finalPoints(q){
+  if (q.solvedOn===1) return 10;
+  if (q.solvedOn===2) return 8;
+  if (q.solvedOn===3) return 7;
+  return Math.min(6, Math.max(0,...q.scores));
+}
+
+/* ---------- Clues (Spanish) ---------- */
+const subj = it => PLABEL[PERS[it.p]];
+const is3 = it => it.p==='el' || it.p==='ellos';
+function ruleClue(it){
+  const inf = it.v, S = `«${subj(it)}»`;
+  switch(it.t){
+    case 'ar': return `«${inf}» es un verbo regular -ar. Quita -ar y añade la terminación del pretérito: -é, -aste, -ó, -amos, -aron.`;
+    case 'er': return `«${inf}» es un verbo regular -er/-ir. Las terminaciones del pretérito son: -í, -iste, -ió, -imos, -ieron.`;
+    case 'car': case 'gar': case 'zar': {
+      const rule = {car:'c → qu (toqué)', gar:'g → gu (jugué)', zar:'z → c (almorcé)'}[it.t];
+      const stemNote = ['jugar','almorzar','comenzar','empezar','probar'].includes(inf) ? ' Además, el cambio de raíz del presente (ue / ie) NO pasa en el pretérito.' : '';
+      if (it.p==='yo') return `¡Ojo con la ortografía! En la forma «yo», los verbos que terminan en -${it.t} cambian ${rule} antes de la -é.${stemNote}`;
+      return `El cambio ortográfico de los verbos -${it.t} solo ocurre en la forma «yo». Para ${S}, el verbo es regular.${stemNote}`;
+    }
+    case 'stem':
+      if (is3(it)) return `«${inf}» es un verbo -ir con cambio de raíz. En el pretérito, la raíz cambia solo en la tercera persona: e → i, o → u (pidió, durmieron).`;
+      return `«${inf}» cambia la raíz en el pretérito solo con él/ella y ellos/ellas. Para ${S}, la raíz NO cambia: usa la terminación regular.`;
+    case 'y':
+      if (is3(it)) return `Cuando la raíz termina en vocal (le-, cre-, ca-, o-), la -i- de la terminación se convierte en -y- en la tercera persona: -yó, -yeron.`;
+      return `Con este verbo, las formas de yo, tú y nosotros llevan tilde en la í: -í, -íste, -ímos.`;
+  }
+}
+function diagnose(guess, it){
+  const ans = it.ans;
+  if (noAcc(guess)===noAcc(ans)) return '¡Casi perfecto! Solo revisa las tildes: ¿qué letra necesita (o no necesita) acento?';
+  if (noAcc(guess)===noAcc(it.v)) return `Escribiste el infinitivo. Hay que conjugar «${it.v}» en el pretérito para ${subj(it)}.`;
+  const idx = it.forms.findIndex(f => noAcc(f)===noAcc(guess));
+  if (idx>=0 && idx!==PERS[it.p]) return `«${guess}» es la forma de «${PLABEL[idx]}». Fíjate en el sujeto de la oración: ${subj(it)}.`;
+  return null;
+}
+function clue(guess, it, attempt){
+  const parts = [];
+  const d = diagnose(guess, it);
+  if (d) parts.push(d);
+  parts.push(ruleClue(it));
+  if (attempt>=2){
+    const n = it.ans.length, start = it.ans.slice(0, Math.min(3, Math.ceil(n/2)));
+    parts.push(`Última pista: la respuesta empieza con «${start}…» y tiene ${n} letras.`);
+  }
+  return parts;
+}
+
+/* ---------- State & rendering ---------- */
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S;
+function fresh(){ return {screen:'intro', r:0, i:0, total:0, results:ROUNDS.map(()=>[]), q:null}; }
+S = fresh();
+
+function updateBoard(){
+  document.getElementById('sbRound').innerHTML = S.screen==='intro' ? '–' : `${Math.min(S.r+1,5)}<sub>/5</sub>`;
+  document.getElementById('sbQ').innerHTML = S.screen==='play' ? `${S.i+1}<sub>/10</sub>` : '–';
+  document.getElementById('sbPts').textContent = S.total;
+}
+function render(){
+  updateBoard();
+  ({intro:renderIntro, roundIntro:renderRoundIntro, play:renderPlay, roundEnd:renderRoundEnd, final:renderFinal})[S.screen]();
+  window.scrollTo({top:0});
+}
+
+function renderIntro(){
+  const special = ['tocar','jugar','almorzar','comenzar','oír','leer','caer','creer','abrazar','acercar','apagar'];
+  app.innerHTML = `
+    <div class="eyebrow">Juego de gramática · El pretérito</div>
+    <h2>El día de la gran rivalidad</h2>
+    <p class="lede">Hoy Blair Academy y Peddie School compiten en cross country, hockey sobre césped, fútbol, tenis, vóleibol y fútbol americano. Las gradas están llenas y los padres trajeron comida para todos. Cuenta la historia: escribe cada verbo en el pretérito.</p>
+    <ul class="rules">
+      <li><b>5 rondas</b> de <b>10 oraciones</b>. Cada verbo vale hasta <b>10 puntos</b>.</li>
+      <li>Si tu respuesta está cerca, ganas puntos parciales (0–10) según lo cerca que estés.</li>
+      <li>Si fallas, recibes una pista en español y puedes intentarlo otra vez (hasta 3 intentos).</li>
+      <li>Si necesitas más de un intento, el máximo para ese verbo es <b>8 puntos</b>.</li>
+      <li>Usa los botones para escribir á, é, í, ó, ú, ñ. Las tildes cuentan.</li>
+    </ul>
+    <div class="verbs" aria-label="Verbos especiales">${special.map(v=>`<span class="chip">${v}</span>`).join('')}<span class="chip">verbos regulares</span><span class="chip">-ir con cambio de raíz</span></div>
+    <div class="actions"><button class="btn" id="go">Empezar</button><span class="muted">Puntuación máxima: 500</span></div>`;
+  const b = document.getElementById('go'); b.onclick = ()=>{S.screen='roundIntro'; render();}; b.focus();
+}
+
+function renderRoundIntro(){
+  const R = ROUNDS[S.r];
+  app.innerHTML = `
+    <div class="eyebrow">Ronda ${S.r+1} de 5</div>
+    <h2>${esc(R.title)}</h2>
+    <p class="lede">${esc(R.sub)}.</p>
+    <div class="actions"><button class="btn" id="go">¡A jugar!</button></div>`;
+  const b = document.getElementById('go'); b.onclick = ()=>{S.screen='play'; S.i=0; newQ(); render();}; b.focus();
+}
+
+function newQ(){ S.q = {attempt:0, scores:[], guesses:[], solvedOn:0, done:false, msgs:[]}; }
+
+function renderPlay(){
+  const R = ROUNDS[S.r], it = R.items[S.i], q = S.q;
+  const res = S.results[S.r];
+  const pips = Array.from({length:10},(_,k)=>{
+    if (k<res.length){ const p=res[k].pts; return `<div class="pip ${p===10?'s10':p>=6?'mid':'low'}"></div>`; }
+    return `<div class="pip ${k===S.i?'cur':''}"></div>`;
+  }).join('');
+  const [before, after] = it.s.split('___');
+  const inputCls = q.done ? (q.solvedOn ? 'right' : 'wrong') : (q.attempt>0 ? 'wrong' : '');
+  const val = q.done ? (q.solvedOn ? it.ans : (q.guesses.at(-1)||'')) : '';
+  app.innerHTML = `
+    <div class="pips" aria-hidden="true">${pips}</div>
+    <div class="qhead"><div class="eyebrow">${esc(R.title)}</div><div class="subj">Sujeto: <b>${esc(subj(it))}</b></div></div>
+    <p class="sentence">${esc(before)}<input id="ans" aria-label="Conjugación de ${esc(it.show||it.v)}" autocomplete="off" autocapitalize="off" spellcheck="false" class="${inputCls}" value="${esc(val)}" ${q.done?'disabled':''}>${esc(after)} <span class="inf">(${esc(it.show||it.v)})</span></p>
+    ${q.done ? '' : `<div class="accents" aria-label="Letras especiales">${['á','é','í','ó','ú','ñ','ü'].map(c=>`<button type="button" data-c="${c}">${c}</button>`).join('')}</div>`}
+    <div id="fbs" style="display:flex;flex-direction:column;gap:10px">${q.msgs.join('')}</div>
+    <div class="actions">${q.done
+      ? `<button class="btn" id="next">${S.i<9?'Siguiente':'Ver resultados de la ronda'}</button>`
+      : `<button class="btn" id="check">Comprobar</button><span class="tries">Intento ${q.attempt+1} de ${MAX_TRIES}</span>`}</div>`;
+  const inp = document.getElementById('ans');
+  if (!q.done){
+    // fit input width to the answer length so the blank doesn't give away the answer exactly
+    inp.style.width = Math.max(8, it.ans.length+3)+'ch';
+    app.querySelectorAll('.accents button').forEach(b=> b.onclick = ()=>{
+      const st=inp.selectionStart??inp.value.length, en=inp.selectionEnd??inp.value.length;
+      inp.value = inp.value.slice(0,st)+b.dataset.c+inp.value.slice(en);
+      inp.focus(); inp.setSelectionRange(st+1,st+1);
+    });
+    inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); check(); }});
+    document.getElementById('check').onclick = check;
+    inp.focus();
+  } else {
+    inp.style.width = Math.max(8, it.ans.length+3)+'ch';
+    const n = document.getElementById('next'); n.onclick = next; n.focus();
+  }
+}
+
+function check(){
+  const it = ROUNDS[S.r].items[S.i], q = S.q;
+  const inp = document.getElementById('ans');
+  const g = clean(inp.value, it);
+  if (!g){ inp.focus(); inp.placeholder='escribe aquí'; return; }
+  q.attempt++;
+  const sc = closeness(g, it.ans);
+  q.scores.push(sc); q.guesses.push(g);
+  if (g===it.ans){
+    q.solvedOn = q.attempt; q.done = true;
+    const pts = finalPoints(q);
+    const head = q.attempt===1 ? '¡Perfecto! Correcto al primer intento.' : `¡Muy bien! Lo lograste en el intento ${q.attempt}.`;
+    q.msgs.push(`<div class="fb ok"><div class="head">${head}</div><div class="es"><span class="ans">${esc(it.ans)}</span> — ${esc(PLABEL[PERS[it.p]])} · ${esc(it.v)}</div><div class="meter">Puntos para este verbo: <b>${pts}/10</b>${q.attempt>1?' (máximo 8 con más de un intento)':''}</div></div>`);
+    finish(pts);
+  } else if (q.attempt>=MAX_TRIES){
+    q.done = true;
+    const pts = finalPoints(q);
+    q.msgs.push(`<div class="fb miss"><div class="head">La respuesta correcta es: <span class="ans">${esc(it.ans)}</span></div><div class="es">${esc(ruleClue(it))}</div><div class="meter">Tu mejor intento estuvo a ${Math.max(...q.scores)}/10 de precisión. Puntos para este verbo: <b>${pts}/10</b></div></div>`);
+    finish(pts);
+  } else {
+    const tips = clue(g, it, q.attempt);
+    q.msgs.push(`<div class="fb hint"><div class="head">«${esc(g)}» no es correcto todavía. Precisión: ${sc}/10</div>${tips.map(t=>`<div class="es">${esc(t)}</div>`).join('')}<div class="meter">Inténtalo otra vez. Máximo ahora: ${q.attempt===1?8:7} puntos.</div></div>`);
+  }
+  render();
+}
+function finish(pts){
+  const it = ROUNDS[S.r].items[S.i];
+  S.results[S.r].push({it, pts, solvedOn:S.q.solvedOn, guesses:S.q.guesses.slice()});
+  S.total += pts;
+}
+function next(){
+  if (S.i<9){ S.i++; newQ(); }
+  else S.screen='roundEnd';
+  render();
+}
+
+const CAT = {ar:'reg', er:'reg', car:'orto', gar:'orto', zar:'orto', stem:'stem', y:'y'};
+const CATNAME = {reg:'Regulares', orto:'-car / -gar / -zar', stem:'-ir con cambio', y:'leer, creer, caer, oír'};
+const CATTIP = {
+  reg:'Repasa las terminaciones regulares y sus tildes: -é, -aste, -ó, -amos, -aron / -í, -iste, -ió, -imos, -ieron.',
+  orto:'Recuerda la forma «yo» de los verbos -car, -gar, -zar: toqué, jugué, almorcé. ¡Las demás formas son regulares!',
+  stem:'Los verbos -ir con cambio de raíz cambian solo en la tercera persona: pidió, sirvieron, durmió. Con yo, tú y nosotros, no hay cambio.',
+  y:'Busca la -y- en la tercera persona: leyó, creyeron, cayó, oyeron. Y pon tilde en leí, leíste, leímos.'
+};
+function cheer(pct){
+  if (pct>=90) return ['¡Increíble! Jugaste como un verdadero campeón.','Incredible! You played like a true champion.'];
+  if (pct>=75) return ['¡Muy bien hecho! Estás en plena forma.','Really well done! You’re in top form.'];
+  if (pct>=55) return ['¡Buen trabajo! Cada ronda te hace más fuerte.','Good work! Every round makes you stronger.'];
+  return ['¡No te rindas! Hasta los mejores atletas necesitan práctica.','Don’t give up! Even the best athletes need practice.'];
+}
+function weakest(list){
+  const agg={};
+  list.forEach(x=>{const c=CAT[x.it.t]; agg[c]=agg[c]||{lost:0,n:0}; agg[c].lost+=10-x.pts; agg[c].n++;});
+  let best=null; for (const c in agg) if (!best || agg[c].lost>agg[best].lost) best=c;
+  return agg[best]?.lost>0 ? best : null;
+}
+
+function renderRoundEnd(){
+  const list = S.results[S.r], pts = list.reduce((a,x)=>a+x.pts,0);
+  const first = list.filter(x=>x.solvedOn===1).length, solved = list.filter(x=>x.solvedOn).length;
+  const [es,en] = cheer(pts);
+  const w = weakest(list);
+  const missed = list.filter(x=>x.pts<10);
+  app.innerHTML = `
+    <div class="eyebrow">Fin de la ronda ${S.r+1}</div>
+    <h2>${esc(ROUNDS[S.r].title)}</h2>
+    <div class="stats">
+      <div class="stat"><b>${pts}</b><span>de 100 puntos</span></div>
+      <div class="stat"><b>${first}/10</b><span>al primer intento</span></div>
+      <div class="stat"><b>${solved}/10</b><span>resueltos</span></div>
+    </div>
+    <div><p class="cheer">${es}</p><p class="en">${en}</p></div>
+    ${w ? `<div class="tip"><b>Consejo para la próxima ronda:</b> ${esc(CATTIP[w])}</div>` : `<div class="tip"><b>¡Ronda perfecta!</b> Todas las respuestas correctas al primer intento. ¡Sigue así!</div>`}
+    ${missed.length ? `<h3>Para repasar</h3><div class="tablewrap"><table class="review"><tbody>${missed.map(x=>`<tr><td>${esc(x.it.show||x.it.v)} · ${esc(subj(x.it))}</td><td class="form">${esc(x.it.ans)}</td><td class="muted">${x.guesses.map(esc).join(' → ')}</td><td class="n">${x.pts}/10</td></tr>`).join('')}</tbody></table></div>` : ''}
+    <div class="actions"><button class="btn" id="go">${S.r<4?`Ronda ${S.r+2}`:'Ver resultado final'}</button></div>`;
+  const b = document.getElementById('go');
+  b.onclick = ()=>{ if (S.r<4){ S.r++; S.screen='roundIntro'; } else S.screen='final'; render(); };
+  b.focus();
+}
+
+function renderFinal(){
+  const per = S.results.map(l=>l.reduce((a,x)=>a+x.pts,0));
+  const all = S.results.flat();
+  const pct = Math.round(S.total/5);
+  const title = pct>=90?'MVP del Día de Blair–Peddie':pct>=75?'Capitán/a del equipo':pct>=55?'Titular':'Futura estrella';
+  const [es,en] = cheer(pct);
+  const w = weakest(all);
+  app.innerHTML = `
+    <div class="eyebrow">Resultado final</div>
+    <h2>${title}</h2>
+    <div class="stats">
+      <div class="stat"><b>${S.total}</b><span>de 500 puntos</span></div>
+      <div class="stat"><b>${all.filter(x=>x.solvedOn===1).length}/50</b><span>al primer intento</span></div>
+      <div class="stat"><b>${pct}%</b><span>precisión total</span></div>
+    </div>
+    <div><p class="cheer">${es} Contaste toda la historia del gran día en el pretérito.</p><p class="en">${en} You told the whole story of the big day in the preterite.</p></div>
+    <h3>Puntos por ronda</h3>
+    <div class="bars">${per.map((p,k)=>`<div class="bar"><span>Ronda ${k+1}</span><div class="track"><div class="fill" style="width:${p}%"></div></div><span class="n">${p}/100</span></div>`).join('')}</div>
+    ${w ? `<div class="tip"><b>Tu próximo reto:</b> ${esc(CATTIP[w])}</div>` : ''}
+    <div class="actions"><button class="btn" id="again">Jugar otra vez</button></div>`;
+  const b = document.getElementById('again'); b.onclick = ()=>{ S=fresh(); render(); }; b.focus();
+}
+
+render();
+</script>
+
+</body></html>
